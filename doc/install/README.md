@@ -5,7 +5,7 @@
 ```
 
 ### Docker安装：
-```
+```bash
 1、Docker要求CentOS系统的内核版本高于3.10，通过uname -r命令查看你当前的内核版本
 uname -r
 
@@ -26,6 +26,7 @@ yum install docker-ce  #由于repo中默认只开启stable仓库，故这里安�
 
 7、配置docker加速
 mkdir -p /data0/docker-data
+
 cat > /etc/docker/daemon.json << \EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -51,7 +52,7 @@ docker rm -f $(docker ps -aq)
 ### 构建镜像并启动：
 
 获取mysql镜像并启动:
-```
+```bash
 1、创建mysql数据持久化目录
 mkdir /data0/mysql
 
@@ -60,7 +61,7 @@ docker run --name mysql -v /data0/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="t
 ```
 
 快速启动omms
-```
+```bash
 1、启动omms程序
 docker run --name omms --link mysql:mysql -p 10000:10000 -d smallmi/omms:latest
 
