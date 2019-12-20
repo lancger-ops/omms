@@ -43,6 +43,9 @@ systemctl enable docker
 
 9、验证安装是否成功
 docker info
+
+10、清理所有docker容器
+docker rm -f $(docker ps -aq)
 ```
 
 ### 构建镜像并启动：
