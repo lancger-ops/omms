@@ -66,6 +66,7 @@ docker run --name mysql -v /data0/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="t
 docker run --name omms --link mysql:mysql -p 10000:10000 -d smallmi/omms:latest
 
 2、访问docker所在宿主机的10000端口即可，账密admin/admin
+http://192.168.56.11:10000
 ```
 
 ## Linux部署
