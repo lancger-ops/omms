@@ -24,11 +24,25 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 6、安装docker
 yum install docker-ce  #由于repo中默认只开启stable仓库，故这里安装的是最新稳定版
 
-7、启动并加入开机启动
-systemctl start docker
+7、配置docker加速
+mkdir -p /data0/docker-data
+cat > /etc/docker/daemon.json << \EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "data-root": "/data0/docker-data",
+  "registry-mirrors" : [
+    "https://ot2k4d59.mirror.aliyuncs.com/"
+  ]
+}
+EOF
+
+8、启动并加入开机启动
+systemctl daemon-reload
+systemctl restart docker
 systemctl enable docker
 
-8、验证安装是否成功(有client和service两部分表示docker安装启动都成功了)
+9、验证安装是否成功
+docker info
 ```
 
 ### 构建镜像并启动：
@@ -36,10 +50,10 @@ systemctl enable docker
 获取mysql镜像并启动:
 ```
 1、创建mysql数据持久化目录
-mkdir /data
+mkdir /data0/mysql
 
 2、运行mysql镜像
-docker run --name mysql -v /data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="test@123" -e MYSQL_DATABASE="omms" -d mysql:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+docker run --name mysql -v /data0/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD="test@123" -e MYSQL_DATABASE="omms" -d mysql:5.7 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 ```
 
 快速启动omms
